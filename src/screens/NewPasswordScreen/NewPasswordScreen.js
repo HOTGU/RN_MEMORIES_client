@@ -1,13 +1,12 @@
-import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
-import Logo from "../../../assets/memories_logo.png";
+import React from "react";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
+import { useForm } from "react-hook-form";
+
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import SocialSignInButtons from "../../components/SocialSignInButtons";
 
 const NewPasswordScreen = ({ navigation }) => {
-    const [code, setCode] = useState("");
-    const [newPassword, setNewPassword] = useState("");
+    const { handleSubmit, control } = useForm();
     const { height } = useWindowDimensions();
 
     const onSubmitPressed = () => {
@@ -23,11 +22,24 @@ const NewPasswordScreen = ({ navigation }) => {
                 <Text style={styles.title}>Reset your password </Text>
             </View>
             <View style={[styles.btnContainer, { height: height * 0.7 }]}>
-                <CustomInput placeholder="Code" value={code} setValue={setCode} />
+                <CustomInput
+                    placeholder="Code"
+                    name="code"
+                    control={control}
+                    rules={{ required: "Code is required" }}
+                />
                 <CustomInput
                     placeholder="New Password"
-                    value={newPassword}
-                    setValue={setNewPassword}
+                    name="newPassword"
+                    control={control}
+                    rules={{
+                        required: "Password is required",
+                        minLength: {
+                            value: 8,
+                            message: "Password should be minimum 8 charaters long",
+                        },
+                    }}
+                    secureTextEntry
                 />
 
                 <CustomButton text="Submit" onPress={onSubmitPressed} />

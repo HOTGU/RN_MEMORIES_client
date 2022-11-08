@@ -1,15 +1,16 @@
-import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
-import Logo from "../../../assets/memories_logo.png";
+import React from "react";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
+import { useForm } from "react-hook-form";
+
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import SocialSignInButtons from "../../components/SocialSignInButtons";
 
 const ConfirmEmailScreen = ({ navigation }) => {
-    const [code, setCode] = useState("");
+    const { handleSubmit, control } = useForm();
     const { height } = useWindowDimensions();
 
-    const onConfirmPressed = () => {
+    const onConfirmPressed = (data) => {
+        console.log(data);
         navigation.navigate("Home");
     };
     const onResendPressed = () => {
@@ -27,11 +28,14 @@ const ConfirmEmailScreen = ({ navigation }) => {
             <View style={[styles.btnContainer, { height: height * 0.7 }]}>
                 <CustomInput
                     placeholder="Enter your confirmation code"
-                    value={code}
-                    setValue={setCode}
+                    name="code"
+                    control={control}
+                    rules={{
+                        required: "Confirm Code is required",
+                    }}
                 />
 
-                <CustomButton text="Confirm" onPress={onConfirmPressed} />
+                <CustomButton text="Confirm" onPress={handleSubmit(onConfirmPressed)} />
 
                 <CustomButton
                     text="Resend code"

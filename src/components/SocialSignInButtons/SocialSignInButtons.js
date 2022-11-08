@@ -14,14 +14,14 @@ const SocialSignInButtons = () => {
             <CustomButton
                 text="Sign in Facebook"
                 onPress={onSignInFacebook}
-                bgColor="#f9f8fc"
+                bgColor="#c7ecee"
                 // bgColor="#f9f8fc"
                 fgColor="#3498db"
             />
             <CustomButton
                 text="Sign in Google"
                 onPress={onSignInGoogle}
-                bgColor="#f9f8fc"
+                bgColor="#ffbe76"
                 // bgColor="#f9f8fc"
                 fgColor="#dd4d44"
             />

@@ -1,16 +1,16 @@
-import React, { useState } from "react";
-import { View, Text, Image, StyleSheet, useWindowDimensions } from "react-native";
-import Logo from "../../../assets/memories_logo.png";
+import React from "react";
+import { View, Text, StyleSheet, useWindowDimensions } from "react-native";
+import { useForm } from "react-hook-form";
+
 import CustomButton from "../../components/CustomButton/CustomButton";
 import CustomInput from "../../components/CustomInput/CustomInput";
-import SocialSignInButtons from "../../components/SocialSignInButtons";
 
 const ForgotPasswordScreen = ({ navigation }) => {
-    const [username, setUsername] = useState("");
-
+    const { handleSubmit, control } = useForm();
     const { height } = useWindowDimensions();
 
-    const onSendPressed = () => {
+    const onSendPressed = (data) => {
+        console.log(data);
         navigation.navigate("NewPassword");
     };
     const onSignInPressed = () => {
@@ -25,11 +25,12 @@ const ForgotPasswordScreen = ({ navigation }) => {
             <View style={[styles.btnContainer, { height: height * 0.7 }]}>
                 <CustomInput
                     placeholder="Username"
-                    value={username}
-                    setValue={setUsername}
+                    control={control}
+                    name="username"
+                    rules={{ required: "Username is required" }}
                 />
 
-                <CustomButton text="Send" onPress={onSendPressed} />
+                <CustomButton text="Send" onPress={handleSubmit(onSendPressed)} />
 
                 <CustomButton
                     text="Back to Sign in"
